@@ -12,6 +12,7 @@ import { Briefcase, Coffee, PartyPopper, Sun, Snowflake, Sparkles } from 'lucide
 import { WardrobeService } from '@/services/WardrobeService';
 import { OutfitService } from '@/services/OutfitService';
 import { Outfit } from '@/types/Outfit';
+import { useTheme } from '@/hooks/useTheme';
 
 const occasions = [
   { id: 'casual', name: 'Daily Casual', icon: Coffee, color: '#10B981', bgColor: '#ECFDF5' },
