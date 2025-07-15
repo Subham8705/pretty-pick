@@ -846,7 +846,7 @@ export default function WardrobeScreen() {
             style={styles.camera}
             ref={(ref) => {
               if (ref) {
-                const takePhoto = () => takePicture(ref);
+                const takePhoto = () => takePicture();
                 (ref as any).takePhoto = takePhoto;
               }
             }}
