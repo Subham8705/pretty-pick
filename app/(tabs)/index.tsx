@@ -856,12 +856,7 @@ export default function WardrobeScreen() {
               <View style={styles.cameraBottom}>
                 <TouchableOpacity
                   style={styles.captureButton}
-                  onPress={() => {
-                    const camera = arguments[0];
-                    if (camera?.takePhoto) {
-                      camera.takePhoto();
-                    }
-                  }}
+                  onPress={takePicture}
                 >
                   <View style={styles.captureButtonInner} />
                 </TouchableOpacity>
