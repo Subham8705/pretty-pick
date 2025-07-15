@@ -844,7 +844,7 @@ export default function WardrobeScreen() {
         <View style={styles.cameraContainer}>
           <CameraView
             style={styles.camera}
-            ref={(ref) => {
+            ref={(ref) => setCameraRef(ref)}
               if (ref) {
                 const takePhoto = () => takePicture();
                 (ref as any).takePhoto = takePhoto;
