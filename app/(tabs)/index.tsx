@@ -845,7 +845,6 @@ export default function WardrobeScreen() {
           <CameraView
             style={styles.camera}
             ref={(ref) => setCameraRef(ref)}
-            }}
           >
             <View style={styles.cameraOverlay}>
               <TouchableOpacity
