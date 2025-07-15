@@ -29,6 +29,7 @@ export default function WardrobeScreen() {
   const [editingItem, setEditingItem] = useState<ClothingItem | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const { colors } = useTheme();
+  const [cameraRef, setCameraRef] = useState<any>(null);
 
   const styles = StyleSheet.create({
     container: {
