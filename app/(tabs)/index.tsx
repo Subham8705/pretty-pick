@@ -562,10 +562,17 @@ export default function WardrobeScreen() {
     setShowCamera(true);
   };
 
-  const takePicture = async (camera: any) => {
-    const photo = await camera.takePictureAsync();
-    setCapturedImage(photo.uri);
-    setShowCamera(false);
+  const takePicture = async () => {
+    if (cameraRef) {
+      try {
+        const photo = await cameraRef.takePictureAsync();
+        setCapturedImage(photo.uri);
+        setShowCamera(false);
+      } catch (error) {
+        console.error('Error taking picture:', error);
+        Alert.alert('Error', 'Failed to take picture. Please try again.');
+      }
+    }
   };
 
   const renderClothingItem = (item: ClothingItem) => (
