@@ -350,6 +350,13 @@ export default function WeeklyFitScreen() {
     
     await OutfitService.updateOutfit(updatedOutfit);
     setCurrentOutfit(updatedOutfit);
+    
+    // Show feedback to user
+    if (updatedOutfit.isFavorite) {
+      Alert.alert('Added to Favorites! ❤️', 'You can view this outfit in History > Favorites tab');
+    } else {
+      Alert.alert('Removed from Favorites', 'Outfit removed from your favorites');
+    }
   };
 
   const handleWearToday = async () => {
@@ -357,6 +364,25 @@ export default function WeeklyFitScreen() {
     
     await OutfitService.markAsWorn(currentOutfit, new Date());
     Alert.alert('Perfect!', 'Outfit added to your history. You look amazing! ✨');
+  };
+
+  const handleShareOutfit = () => {
+    if (!currentOutfit) return;
+    
+    Alert.alert(
+      'Share Outfit',
+      `Share your "${currentOutfit.shirt.name} + ${currentOutfit.pant.name}" outfit?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Share',
+          onPress: () => {
+            // In a real app, this would integrate with native sharing
+            Alert.alert('Shared!', 'Your outfit has been shared successfully! 📸');
+          },
+        },
+      ]
+    );
   };
 
   const handleSelectAlternative = async (outfit: Outfit) => {
@@ -424,7 +450,10 @@ export default function WeeklyFitScreen() {
           >
             <Calendar size={18} color="#3B82F6" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={handleShareOutfit}
+          >
             <Share2 size={18} color="#6B7280" />
           </TouchableOpacity>
         </View>

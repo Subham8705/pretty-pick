@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Calendar, Heart, Trash2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react-native';
 import { HistoryService } from '@/services/HistoryService';
 import { OutfitService } from '@/services/OutfitService';
@@ -374,6 +376,18 @@ export default function HistoryScreen() {
     loadData();
   }, []);
 
+  // Reload data when screen comes into focus or tab changes
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData();
+    }, [])
+  );
+
+  // Reload data when switching between tabs
+  useEffect(() => {
+    loadData();
+  }, [activeTab]);
+
   const loadData = async () => {
     const historyData = await HistoryService.getWearHistory();
     const favoriteOutfits = await OutfitService.getFavoriteOutfits();
@@ -392,7 +406,16 @@ export default function HistoryScreen() {
       isFavorite: !outfit.isFavorite,
     };
     await OutfitService.updateOutfit(updatedOutfit);
-    loadData();
+    
+    // Show feedback to user
+    if (updatedOutfit.isFavorite) {
+      Alert.alert('Added to Favorites! ❤️', 'Outfit saved to your favorites');
+    } else {
+      Alert.alert('Removed from Favorites', 'Outfit removed from your favorites');
+    }
+    
+    // Immediately reload data to reflect changes
+    await loadData();
   };
 
   const getMonthName = (date: Date) => {

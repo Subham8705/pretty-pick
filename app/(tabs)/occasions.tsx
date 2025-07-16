@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
 import { Briefcase, Coffee, PartyPopper, Sun, Snowflake, Sparkles } from 'lucide-react-native';
 import { WardrobeService } from '@/services/WardrobeService';
@@ -69,16 +70,16 @@ export default function OccasionsScreen() {
     },
     occasionsContent: {
       paddingHorizontal: 24,
-      paddingVertical: 20,
+      paddingVertical: 12,
       gap: 12,
     },
     occasionButton: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 20,
-      paddingVertical: 12,
-      borderRadius: 24,
-      gap: 8,
+      paddingHorizontal: 16,
+      paddingVertical: 6,
+      borderRadius: 16,
+      gap: 6,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.05,
@@ -86,14 +87,14 @@ export default function OccasionsScreen() {
       elevation: 2,
     },
     occasionButtonText: {
-      fontSize: 15,
+      fontSize: 12,
       fontWeight: '600',
       letterSpacing: 0.3,
     },
     content: {
       flex: 1,
-      paddingHorizontal: 24,
-      paddingTop: 24,
+      paddingHorizontal: 20,
+      paddingTop: 20,
     },
     sectionHeader: {
       flexDirection: 'row',
@@ -119,7 +120,7 @@ export default function OccasionsScreen() {
       color: colors.textSecondary,
     },
     outfitsList: {
-      paddingBottom: 120,
+      paddingBottom: 100,
     },
     outfitItem: {
       backgroundColor: colors.surface,
@@ -304,11 +305,20 @@ export default function OccasionsScreen() {
       isFavorite: !outfit.isFavorite,
     };
     await OutfitService.updateOutfit(updatedOutfit);
+    
+    // Show feedback to user
+    if (updatedOutfit.isFavorite) {
+      Alert.alert('Added to Favorites! ❤️', 'You can view this outfit in History > Favorites tab');
+    } else {
+      Alert.alert('Removed from Favorites', 'Outfit removed from your favorites');
+    }
+    
     loadOutfits();
   };
 
   const handleWearOutfit = async (outfit: Outfit) => {
     await OutfitService.markAsWorn(outfit, new Date());
+    Alert.alert('Perfect!', 'Outfit added to your history. You look amazing! ✨');
     loadOutfits();
   };
 
@@ -326,7 +336,7 @@ export default function OccasionsScreen() {
         onPress={() => setSelectedOccasion(occasion.id)}
       >
         <IconComponent 
-          size={20} 
+          size={16} 
           color={isSelected ? '#FFFFFF' : occasion.color}
           strokeWidth={2.5}
         />
